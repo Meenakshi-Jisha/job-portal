@@ -107,4 +107,57 @@ const getApplicantsForJob = async (req, res) => {
         });
     }
 };
-module.exports = {applyJob,getMyApplications, getApplicantsForJob};
+const updateApplicationStatus = async (req, res) => {
+    try {
+        const { applicationId } = req.params;
+        const { status } = req.body;
+
+        // validate input
+        if (
+        !["accepted","rejected"]
+        .includes(status)
+        ) {
+        return res.status(400).json({
+            message:
+            "Status must be accepted or rejected"
+        });
+        }
+
+        const application =
+        await Application.findById(
+            applicationId
+        ).populate("job");
+
+        if (!application) {
+        return res.status(404).json({
+            message:"Application not found"
+        });
+        }
+
+        // ownership check
+        if (
+        application.job.createdBy.toString()
+        !== req.user.id
+        ) {
+        return res.status(403).json({
+            message:"Not authorized"
+        });
+        }
+
+        application.status = status;
+
+        await application.save();
+
+        res.status(200).json({
+        message:"Status updated",
+        application
+        });
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+        message:"Server Error"
+        });
+    }
+};
+module.exports = {applyJob,getMyApplications, getApplicantsForJob,updateApplicationStatus};
