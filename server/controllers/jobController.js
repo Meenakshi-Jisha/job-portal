@@ -64,5 +64,29 @@ const getAllJobs = async (req, res) => {
 
     }
 };
+const getMyJobs = async (req, res) => {
 
-    module.exports = {createJob,getAllJobs,};
+    try {
+
+        const jobs = await Job.find({
+        createdBy: req.user.id
+        });
+
+        res.status(200).json({
+        count: jobs.length,
+        jobs
+        });
+
+    } catch(error){
+
+        console.log(error);
+
+        res.status(500).json({
+        message:"Server Error"
+        });
+
+    }
+
+};
+
+    module.exports = {createJob,getAllJobs,getMyJobs};
