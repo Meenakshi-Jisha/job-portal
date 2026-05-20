@@ -123,5 +123,46 @@ const searchJobs = async (req,res)=>{
         });
     }
 }
+const deleteJob = async (req,res)=>{
+    try{
+        const {jobId}=req.params;
 
-module.exports = {createJob,getAllJobs,getMyJobs,searchJobs};
+        const job =
+        await Job.findById(jobId);
+
+        if(!job){
+            return res.status(404).json({
+                message:"Job not found"
+            });
+        }
+
+        if(
+            job.createdBy.toString()
+            !== req.user.id
+        ){
+
+            return res.status(403).json({
+                message:"Not authorized"
+            });
+
+        }
+
+        await Job.findByIdAndDelete(
+            jobId
+        );
+
+        res.status(200).json({
+            message:
+            "Job deleted successfully"
+        });
+
+    }catch(error){
+
+        console.log(error);
+
+        res.status(500).json({
+            message:"Server Error"
+        });
+    }
+};
+module.exports = {createJob,getAllJobs,getMyJobs,searchJobs,deleteJob};
