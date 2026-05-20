@@ -92,5 +92,34 @@ const loginUser = async (req, res) => {
         });
     }
 };
+const uploadResume=async(req,res)=>{
+    try{
+        const user=await User.findById(
+        req.user.id
+        );
 
-module.exports = {registerUser,loginUser,};
+        user.resume=req.file.path;
+
+        await user.save();
+
+        res.status(200).json({
+
+        message:
+        "Resume uploaded",
+
+        resume:
+        req.file.path
+
+        });
+
+    }catch(error){
+
+        res.status(500).json({
+        message:"Server Error"
+        });
+            
+    }
+
+}
+
+module.exports = {registerUser,loginUser,uploadResume};
