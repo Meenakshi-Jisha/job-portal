@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { createJob,getAllJobs,getMyJobs,searchJobs,deleteJob } = require("../controllers/jobController");
+const { createJob,getAllJobs,getMyJobs,searchJobs,deleteJob,updateJob } = require("../controllers/jobController");
 
 const authMiddleware = require("../middleware/authMiddleware");
 
@@ -14,4 +14,5 @@ router.get("/", getAllJobs);
 router.get("/my-jobs",authMiddleware,authorizeRoles("recruiter"),getMyJobs);
 router.get("/search",searchJobs);
 router.delete("/:jobId",authMiddleware,authorizeRoles("recruiter"),deleteJob);
+router.put("/:jobId",authMiddleware,authorizeRoles("recruiter"),updateJob);
 module.exports = router;

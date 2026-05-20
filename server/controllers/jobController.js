@@ -127,8 +127,7 @@ const deleteJob = async (req,res)=>{
     try{
         const {jobId}=req.params;
 
-        const job =
-        await Job.findById(jobId);
+        const job =await Job.findById(jobId);
 
         if(!job){
             return res.status(404).json({
@@ -137,8 +136,7 @@ const deleteJob = async (req,res)=>{
         }
 
         if(
-            job.createdBy.toString()
-            !== req.user.id
+            job.createdBy.toString()!== req.user.id
         ){
 
             return res.status(403).json({
@@ -165,4 +163,59 @@ const deleteJob = async (req,res)=>{
         });
     }
 };
-module.exports = {createJob,getAllJobs,getMyJobs,searchJobs,deleteJob};
+const updateJob = async(req,res)=>{
+    try{
+
+        const {jobId}=req.params;
+
+        const job=await Job.findById(jobId);
+
+        if(!job){
+
+            return res.status(404).json({
+                message:"Job not found"
+            });
+
+        }
+
+        if(
+            job.createdBy.toString()!== req.user.id
+        ){
+
+            return res.status(403).json({
+                message:"Not authorized"
+            });
+
+        }
+
+        const updatedJob =await Job.findByIdAndUpdate(
+
+            jobId,
+
+            req.body,
+
+            {
+                new:true
+            }
+
+        );
+
+        res.status(200).json({
+            message:
+            "Job updated successfully",
+
+            updatedJob
+        });
+
+    }catch(error){
+
+        console.log(error);
+
+        res.status(500).json({
+            message:"Server Error"
+        });
+
+    }
+
+};
+module.exports = {createJob,getAllJobs,getMyJobs,searchJobs,deleteJob,updateJob};
