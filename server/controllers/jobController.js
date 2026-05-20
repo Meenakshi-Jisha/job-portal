@@ -88,5 +88,40 @@ const getMyJobs = async (req, res) => {
     }
 
 };
+const searchJobs = async (req,res)=>{
+    try{
+        const keyword =
+        req.query.keyword || "";
 
-    module.exports = {createJob,getAllJobs,getMyJobs};
+        const location =
+        req.query.location || "";
+
+        const jobs =
+        await Job.find({
+            title:{
+                $regex:keyword,
+                $options:"i"
+            },
+
+            location:{
+                $regex:location,
+                $options:"i"
+            }
+        }).populate(
+            "createdBy",
+            "name email"
+        );
+        res.status(200).json({
+            count:jobs.length,
+            jobs
+        });
+    }catch(error){
+        console.log(error);
+
+        res.status(500).json({
+            message:"Server Error"
+        });
+    }
+}
+
+module.exports = {createJob,getAllJobs,getMyJobs,searchJobs};
