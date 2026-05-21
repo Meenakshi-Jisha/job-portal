@@ -121,5 +121,49 @@ const uploadResume=async(req,res)=>{
     }
 
 }
+const updateProfile =async(req,res)=>{
+    try{
+            const user=await User.findById(req.user.id);
 
-module.exports = {registerUser,loginUser,uploadResume};
+            if(!user){
+                return res.status(404)
+                .json({
+                    message:
+                    "User not found"
+                });
+
+            }
+
+            const {name,bio,skills,phone}=req.body;
+
+            if(name)
+                user.name=name;
+
+            if(bio)
+                user.bio=bio;
+
+            if(skills)
+                user.skills=skills;
+
+            if(phone)
+                user.phone=phone;
+
+            await user.save();
+
+            res.status(200).json({
+                message:"Profile updated",
+                user
+            });
+        }catch(error){
+
+            console.log(error);
+
+            res.status(500).json({
+            message:"Server Error"
+        });
+
+    }
+
+    }
+
+module.exports = {registerUser,loginUser,uploadResume,updateProfile};

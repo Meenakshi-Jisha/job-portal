@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { registerUser ,loginUser,uploadResume} = require("../controllers/authController");
+const { registerUser ,loginUser,updateProfile,uploadResume} = require("../controllers/authController");
 const authMiddleware = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 const upload =require("../middleware/uploadMiddleware");
@@ -23,5 +23,6 @@ router.get("/recruiter-dashboard",authMiddleware,authorizeRoles("recruiter"),(re
         });
     }
 );
+router.put("/profile",authMiddleware,updateProfile);
 router.post("/upload-resume",authMiddleware,upload.single("resume"),uploadResume);
 module.exports = router;
