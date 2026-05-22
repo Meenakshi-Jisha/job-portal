@@ -122,9 +122,7 @@ const updateApplicationStatus = async (req, res) => {
             "Status must be accepted or rejected"
         });
         }
-
-        const application =
-        await Application.findById(
+        const application =await Application.findById(
             applicationId
         ).populate("job");
 
@@ -133,17 +131,14 @@ const updateApplicationStatus = async (req, res) => {
             message:"Application not found"
         });
         }
-
         // ownership check
         if (
-        application.job.createdBy.toString()
-        !== req.user.id
+        application.job.createdBy.toString()!== req.user.id
         ) {
         return res.status(403).json({
             message:"Not authorized"
         });
         }
-
         application.status = status;
 
         await application.save();
@@ -160,4 +155,46 @@ const updateApplicationStatus = async (req, res) => {
         });
     }
 };
-module.exports = {applyJob,getMyApplications, getApplicantsForJob,updateApplicationStatus};
+const withdrawApplication =async(req,res)=>{
+    try{
+        const {applicationId} = req.params;
+        const application =await Application.findById(
+            applicationId
+        );
+
+        if(!application){
+            return res.status(404)
+            .json({
+                message:
+                "Application not found"
+            });
+        }
+        if(
+            application.applicant.toString()!==req.user.id
+        ){
+            return res.status(403)
+            .json({
+                message:
+                "Not authorized"
+            });
+        }
+        await Application.findByIdAndDelete(
+            applicationId
+        );
+
+        res.status(200)
+        .json({
+            message:
+            "Application withdrawn"
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500)
+        .json({
+            message:
+            "Server Error"
+        });
+}
+
+};
+module.exports = {applyJob,getMyApplications, getApplicantsForJob,updateApplicationStatus,withdrawApplication};
