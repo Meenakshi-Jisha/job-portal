@@ -1,17 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import {Routes,Route} from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
+import Jobs from "./pages/Jobs";
 
-  return (
-    <>
-      <h1>Job Portal</h1>
-    </>
-  )
+function App(){ 
+  return(
+
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>} />
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/dashboard"  element={<Dashboard/>}  />
+        <Route path="/jobs" element={<Jobs/>} />
+      </Routes>
+
+    )
+
 }
 
-export default App
+export default App;
