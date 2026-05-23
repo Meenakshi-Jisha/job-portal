@@ -15,7 +15,6 @@ const registerUser = async (req, res) => {
             message: "User already exists",
         });
         }
-
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -97,52 +96,37 @@ const uploadResume=async(req,res)=>{
         const user=await User.findById(
         req.user.id
         );
-
         user.resume=req.file.path;
-
         await user.save();
 
         res.status(200).json({
-
         message:
         "Resume uploaded",
-
         resume:
         req.file.path
 
         });
-
     }catch(error){
-
         res.status(500).json({
         message:"Server Error"
-        });
-            
+        }); 
     }
 
 }
 const getProfile = async (req, res) => {
-
     try {
-
         const user = await User.findById(
         req.user.id
         ).select("-password");
 
         if (!user) {
-
         return res.status(404).json({
             message: "User not found"
         });
-
         }
-
         res.status(200).json(user);
-
     } catch (error) {
-
         console.log(error);
-
         res.status(500).json({
         message: "Server Error"
         });
@@ -153,18 +137,14 @@ const getProfile = async (req, res) => {
 const updateProfile =async(req,res)=>{
     try{
             const user=await User.findById(req.user.id);
-
             if(!user){
                 return res.status(404)
                 .json({
                     message:
                     "User not found"
                 });
-
             }
-
             const {name,bio,skills,phone}=req.body;
-
             if(name)
                 user.name=name;
 
@@ -178,21 +158,51 @@ const updateProfile =async(req,res)=>{
                 user.phone=phone;
 
             await user.save();
-
             res.status(200).json({
                 message:"Profile updated",
                 user
             });
         }catch(error){
-
             console.log(error);
-
             res.status(500).json({
             message:"Server Error"
         });
-
     }
+}
 
-    }
+const changePassword =async(req,res)=>{
+    try{
+        const {oldPassword,newPassword}=req.body;
+        const user=await User.findById(req.user.id);
 
-module.exports = {registerUser,loginUser,getProfile,uploadResume,updateProfile};
+        if(!user){
+            return res.status(404).json({
+                message:"User not found"
+            });
+        }
+
+        const isMatch=await bcrypt.compare(oldPassword,user.password);
+
+        if(!isMatch){
+            return res.status(400).json({
+                message:"Old password incorrect"
+            });
+        }
+
+        const salt=await bcrypt.genSalt(10);
+
+        user.password=await bcrypt.hash(newPassword,salt);
+
+        await user.save();
+        res.status(200).json({
+            message:"Password updated"
+        });
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            message:"Server Error"
+        });
+}
+};
+module.exports = {registerUser,loginUser,getProfile,uploadResume,updateProfile,changePassword};
