@@ -6,10 +6,12 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
+import Navbar from "./components/Navbar";
 
 function App(){ 
   return(
-
+    <>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -18,7 +20,7 @@ function App(){
         <Route path="/dashboard"  element={<Dashboard/>}  />
         <Route path="/jobs" element={<Jobs/>} />
       </Routes>
-
+    </>
     )
 
 }
