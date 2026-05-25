@@ -7,3 +7,9 @@ export const loginUser= (data)=>{
         data
     )
 }
+export const registerUser= (data)=>{
+    return axios.post(
+        `${API}/register`,
+        data
+    )
+}
