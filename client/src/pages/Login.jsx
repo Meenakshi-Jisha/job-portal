@@ -21,7 +21,8 @@ function Login(){
       localStorage.setItem("token",res.data.token)
       
       alert("Login successful");
-      navigate("/")
+      // navigate("/")
+      window.location="/";
     }
     catch(error){
       console.log(error);
