@@ -16,9 +16,23 @@ export const registerUser= (data)=>{
 }
 
 export const getProfile=()=>{
-const token=localStorage.getItem("token");
+    const token=localStorage.getItem("token");
     return axios.get(
         `${API}/profile`,
+        {
+            headers:{
+                Authorization:
+                `Bearer ${token}`
+            }
+        }
+    );
+}
+
+export const updateProfile=(data)=>{
+    const token=localStorage.getItem("token");
+    return axios.put(
+        `${API}/profile`,
+        data,
         {
             headers:{
                 Authorization:
