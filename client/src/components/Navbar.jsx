@@ -16,6 +16,7 @@ function Navbar() {
             <>
                 <Link to="/profile">Profile</Link> {"|"}
                 <Link to="/dashboard">Dashboard</Link> {"|"}
+                <Link to="/my">My Applications</Link> {"|"}
                 <button onClick={handleLogout}>Logout</button>
             </>
             ):( <>

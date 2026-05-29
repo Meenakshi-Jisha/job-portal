@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyApplications from "./pages/MyApplications";
 
 function App(){ 
   return(
@@ -24,6 +25,11 @@ function App(){
         <Route path="/dashboard"  element={
               <ProtectedRoute>
                 <Dashboard/>
+              </ProtectedRoute>
+        }  />
+        <Route path="/my"  element={
+              <ProtectedRoute>
+                <MyApplications/>
               </ProtectedRoute>
         }  />
         <Route path="/jobs" element={<Jobs/>} />
