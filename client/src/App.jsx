@@ -9,6 +9,7 @@ import Jobs from "./pages/Jobs";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
+import Applicants from "./pages/Applicants";
 
 function App(){ 
   return(
@@ -30,6 +31,11 @@ function App(){
         <Route path="/my"  element={
               <ProtectedRoute>
                 <MyApplications/>
+              </ProtectedRoute>
+        }  />
+        <Route path="/applicants/:jobId"  element={
+              <ProtectedRoute>
+                <Applicants/>
               </ProtectedRoute>
         }  />
         <Route path="/jobs" element={<Jobs/>} />

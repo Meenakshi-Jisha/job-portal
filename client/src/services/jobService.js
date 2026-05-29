@@ -29,3 +29,28 @@ export const getMyApplications=()=>{
         }
     );
 }
+
+export const getApplicants=(jobId)=>{
+    const token=localStorage.getItem("token")
+    return axios.get(
+        `http://localhost:5000/api/applications/job/${jobId}`,
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
+
+export const updateStatus=(applicationId,status)=>{
+    const token=localStorage.getItem("token")
+    return axios.patch(
+        `http://localhost:5000/api/applications/status/${applicationId}`,
+        {status},
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
