@@ -1,5 +1,5 @@
 import {useEffect,useState} from "react";
-import {getAllJobs} from "../services/jobService";
+import {getAllJobs,applyJob} from "../services/jobService";
 
 function Jobs(){ 
   const [jobs,setJobs]=useState([]);
@@ -18,6 +18,18 @@ const fetchJobs=async()=>{
     console.log(error);
   }
 };
+
+const handleApply=async(jobId)=>{
+  try{
+    const res=await applyJob(jobId);
+    alert(res.data.message);
+  }catch(error){
+    console.log(error);
+    console.log(error.response);
+    alert("Application failed");
+  }
+};
+
 return(
   <div>
     <h1>All Jobs</h1>
@@ -28,6 +40,7 @@ return(
         <p>Company:{job.company}</p>
         <p>Location:{job.location}</p>
         <p>Salary:{job.salary}</p>
+        <button onClick={()=>handleApply(job._id)}>Apply</button>
         <hr/>
       </div>
     ))
