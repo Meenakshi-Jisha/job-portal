@@ -122,6 +122,23 @@ const getMyJobs = async (req, res) => {
 
 };
 
+const getJobById=async(req,res)=>{
+    try{
+        const job = await Job.findById(req.params.id)
+        .populate("createdBy","name email")
+        if(!job){
+            return res.status(404).json({
+                message:"Job not found"
+            })
+        }
+        res.status(200).json(job)
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            message:"Server Error"
+        })
+    }
+}
 const searchJobs = async (req,res)=>{
     try{
         const keyword =req.query.keyword || "";
@@ -223,4 +240,4 @@ const updateJob = async(req,res)=>{
     }
 };
 
-module.exports = {createJob,getAllJobs,getMyJobs,searchJobs,deleteJob,updateJob};
+module.exports = {createJob,getAllJobs,getMyJobs,getJobById,searchJobs,deleteJob,updateJob};

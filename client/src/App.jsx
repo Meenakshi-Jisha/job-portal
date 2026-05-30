@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
 import Applicants from "./pages/Applicants";
 import MyJobs from "./pages/MyJobs";
+import JobDetails from "./pages/JobDetails";
 
 function App(){ 
   return(
@@ -45,6 +46,7 @@ function App(){
               </ProtectedRoute>
         }  />
         <Route path="/jobs" element={<Jobs/>} />
+        <Route path="/jobs/:id" element={<JobDetails/>}/>
       </Routes>
     </>
     )

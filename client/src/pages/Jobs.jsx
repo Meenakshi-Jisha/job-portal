@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react";
 import {getAllJobs,applyJob,searchJobs} from "../services/jobService";
+import { Link } from "react-router-dom";
 
 function Jobs(){ 
   const [jobs,setJobs]=useState([]);
@@ -59,6 +60,7 @@ return(
         <p>Company:{job.company}</p>
         <p>Location:{job.location}</p>
         <p>Salary:{job.salary}</p>
+        <Link to={`/jobs/${job._id}`}>View Details</Link> <br /> <br />
         <button onClick={()=>handleApply(job._id)}>Apply</button>
         <hr/>
       </div>
