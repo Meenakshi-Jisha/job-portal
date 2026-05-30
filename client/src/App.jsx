@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
 import Applicants from "./pages/Applicants";
+import MyJobs from "./pages/MyJobs";
 
 function App(){ 
   return(
@@ -36,6 +37,11 @@ function App(){
         <Route path="/applicants/:jobId"  element={
               <ProtectedRoute>
                 <Applicants/>
+              </ProtectedRoute>
+        }  />
+        <Route path="/my-jobs"  element={
+              <ProtectedRoute>
+                <MyJobs/>
               </ProtectedRoute>
         }  />
         <Route path="/jobs" element={<Jobs/>} />

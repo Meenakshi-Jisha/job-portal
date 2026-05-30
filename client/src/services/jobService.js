@@ -54,3 +54,15 @@ export const updateStatus=(applicationId,status)=>{
         }
     )
 }
+
+export const getMyJobs=()=>{
+    const token=localStorage.getItem("token")
+    return axios.get(
+        `${API}/my-jobs`,
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
