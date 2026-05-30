@@ -66,3 +66,9 @@ export const getMyJobs=()=>{
         }
     )
 }
+
+export const searchJobs=(keyword,location)=>{
+    return axios.get(
+        `${API}/search?keyword=${keyword}&location=${location}`
+    )
+}

@@ -1,8 +1,10 @@
 import {useEffect,useState} from "react";
-import {getAllJobs,applyJob} from "../services/jobService";
+import {getAllJobs,applyJob,searchJobs} from "../services/jobService";
 
 function Jobs(){ 
   const [jobs,setJobs]=useState([]);
+  const [keyword,setKeyword]=useState("")
+  const [location,setLocation]=useState("")
   useEffect(()=>{
     fetchJobs();
   },[]);
@@ -26,13 +28,30 @@ const handleApply=async(jobId)=>{
   }catch(error){
     console.log(error);
     console.log(error.response);
-    alert("Application failed");
+    // alert("Appliction failed")
+    alert("You are already Applied");
   }
 };
+
+const handleSearch=async()=>{
+  try{
+    const res=await searchJobs(keyword,location)
+    setJobs(res.data.jobs)
+  }catch(error){
+    console.log(error);
+  }
+}
 
 return(
   <div>
     <h1>All Jobs</h1>
+    <input type="text" placeholder="Search keyword" value={keyword}
+          onChange={(e)=>setKeyword(e.target.value)}
+    />
+    <input type="text" placeholder="Location" value={location}
+          onChange={(e)=>setLocation(e.target.value)}
+    />
+    <button onClick={handleSearch}>Search</button> <br /> <br />
     {
     jobs.map((job)=>(
       <div key={job._id}>
