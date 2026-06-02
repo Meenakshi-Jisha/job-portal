@@ -78,3 +78,15 @@ export const getJobById=(id)=>{
         `${API}/${id}`
     )
 }
+
+export const createJob=(data)=>{
+    const token=localStorage.getItem("token")
+    return axios.post(`${API}/create`,
+        data,
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}

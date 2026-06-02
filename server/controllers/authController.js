@@ -7,6 +7,13 @@ const registerUser = async (req, res) => {
     // get data from request body
     const { name, email, password, role } = req.body;
 
+    // validate required fields
+    if(!name || !email || !password){
+        return res.status(400).json({
+            message:"All fields required"
+        });
+    }
+
     // check if user already exists
     const existingUser = await User.findOne({ email });
 
@@ -45,6 +52,13 @@ const loginUser = async (req, res) => {
     try {
         // get email and password
         const { email, password } = req.body;
+
+        // validate required fields
+        if(!email || !password){
+            return res.status(400).json({
+                message:"All fields required"
+            });
+        }
 
         // check if user exists
         const user = await User.findOne({ email });
@@ -93,26 +107,26 @@ const loginUser = async (req, res) => {
 };
 const uploadResume=async(req,res)=>{
     try{
-        const user=await User.findById(
-        req.user.id
-        );
+        if(!req.file){
+            return res.status(400).json({
+                message:"No file uploaded"
+            });
+        }
+        const user=await User.findById(req.user.id);
         user.resume=req.file.path;
         await user.save();
 
         res.status(200).json({
-        message:
-        "Resume uploaded",
-        resume:
-        req.file.path
-
+            message:"Resume uploaded",
+            resume:req.file.path
         });
     }catch(error){
         res.status(500).json({
-        message:"Server Error"
+            message:"Server Error"
         }); 
     }
-
 }
+
 const getProfile = async (req, res) => {
     try {
         const user = await User.findById(
@@ -128,7 +142,7 @@ const getProfile = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-        message: "Server Error"
+            message: "Server Error"
         });
 
     }
@@ -151,8 +165,12 @@ const updateProfile =async(req,res)=>{
             if(bio)
                 user.bio=bio;
 
-            if(skills)
-                user.skills=skills;
+            // if(skills){
+            //     user.skills=skills
+            // }
+            if(skills){
+                user.skills=skills.split(",");
+            }
 
             if(phone)
                 user.phone=phone;

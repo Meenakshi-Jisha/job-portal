@@ -31,6 +31,7 @@ function Navbar() {
                     <>
                         <Link to="/dashboard">Dashboard</Link> {"|"}
                         <Link to="/my-jobs">My Jobs</Link> {"|"}
+                        <Link to="/create-job">Create Job</Link>{" | "}
                     </>
                 )
             }
