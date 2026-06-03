@@ -1,13 +1,18 @@
 import {useEffect,useState} from "react";
-import {getAllJobs,applyJob,searchJobs} from "../services/jobService";
+import {getAllJobs,applyJob,searchJobs,bookmarkJob,getSavedJobs} from "../services/jobService";
 import { Link } from "react-router-dom";
 
 function Jobs(){ 
   const [jobs,setJobs]=useState([]);
   const [keyword,setKeyword]=useState("")
   const [location,setLocation]=useState("")
+  const role=localStorage.getItem("role")
+  const [bookmarkedJobs,setBookmarkedJobs]=useState([])
   useEffect(()=>{
     fetchJobs();
+  },[]);
+  useEffect(()=>{
+    fetchBookmarks();
   },[]);
 
 const fetchJobs=async()=>{
@@ -42,7 +47,28 @@ const handleSearch=async()=>{
     console.log(error);
   }
 }
-
+const handleBookmark=async(jobId)=>{
+  try{
+    const res=await bookmarkJob(jobId);
+    alert(res.data.message);
+    setBookmarkedJobs(prev=>
+      prev.includes(jobId) ? prev : [...prev,jobId]
+    );
+    fetchBookmarks();
+  }catch(error){
+    console.log(error);
+    alert(error.response?.data?.message || "Bookmark failed");
+  }
+};
+const fetchBookmarks=async()=>{
+  try{
+    const res=await getSavedJobs();
+    const ids=res.data.bookmarks.map((bookmark)=>bookmark.job._id);
+    setBookmarkedJobs(ids);
+  }catch(error){
+    console.log(error);
+  }
+}
 return(
   <div>
     <h1>All Jobs</h1>
@@ -62,6 +88,11 @@ return(
         <p>Salary:{job.salary}</p>
         <Link to={`/jobs/${job._id}`}>View Details</Link> <br /> <br />
         <button onClick={()=>handleApply(job._id)}>Apply</button>
+        {
+          role==="jobseeker" && (bookmarkedJobs.includes(job._id)?
+          <button disabled>Bookmarked</button>:
+          <button onClick={()=>handleBookmark(job._id)}>Bookmark</button>)
+        }
         <hr/>
       </div>
     ))

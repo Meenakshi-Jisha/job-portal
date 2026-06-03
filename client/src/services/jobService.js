@@ -102,3 +102,28 @@ export const getDashboardStats=()=>{
         }
     )
 }
+
+export const bookmarkJob=(jobId)=>{
+    const token=localStorage.getItem("token")
+    return axios.post(
+        `http://localhost:5000/api/bookmarks/${jobId}`,
+        {},
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
+
+export const getSavedJobs=()=>{
+    const token=localStorage.getItem("token")
+    return axios.get(
+        `http://localhost:5000/api/bookmarks`,
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}

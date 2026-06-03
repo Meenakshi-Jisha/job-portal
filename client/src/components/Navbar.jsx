@@ -23,6 +23,8 @@ function Navbar() {
                 role==="jobseeker" && (
                     <>
                         <Link to="/my">My Applications</Link> {"|"}
+                        <Link to="/saved-jobs">Saved Jobs</Link> {"|"}
+
                     </>
                 )
             }

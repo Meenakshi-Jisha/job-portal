@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
+import SavedJobs from "./pages/SavedJobs";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
@@ -54,6 +55,7 @@ function App(){
         }  />
         
         <Route path="/jobs" element={<Jobs/>} />
+        <Route path="/saved-jobs" element={<ProtectedRoute><SavedJobs/></ProtectedRoute>} />
         <Route path="/jobs/:id" element={<JobDetails/>}/>
       </Routes>
     </>
