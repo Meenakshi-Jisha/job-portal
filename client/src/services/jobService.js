@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API ="http://localhost:5000/api/jobs";
 
-export const getAllJobs=()=>{
-    return axios.get(API);
+export const getAllJobs=(page=1)=>{
+    return axios.get(`${API}?page=${page}&limit=5`);
 };
 
 export const applyJob=(jobId)=>{
@@ -120,6 +120,18 @@ export const getSavedJobs=()=>{
     const token=localStorage.getItem("token")
     return axios.get(
         `http://localhost:5000/api/bookmarks`,
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
+
+export const removeBookmark=(jobId)=>{
+    const token=localStorage.getItem("token")
+    return axios.delete(
+        `http://localhost:5000/api/bookmarks/${jobId}`,
         {
             headers:{
                 Authorization:`Bearer ${token}`

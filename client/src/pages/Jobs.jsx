@@ -8,20 +8,23 @@ function Jobs(){
   const [location,setLocation]=useState("")
   const role=localStorage.getItem("role")
   const [bookmarkedJobs,setBookmarkedJobs]=useState([])
+  // pagination
+  const [currentPage,setCurrentPage]=useState(1);
+  const [totalPages,setTotalPages]=useState(1)
   useEffect(()=>{
-    fetchJobs();
-  },[]);
+    fetchJobs(currentPage);
+  },[currentPage]);
   useEffect(()=>{
     fetchBookmarks();
   },[]);
 
-const fetchJobs=async()=>{
+const fetchJobs=async(page=1)=>{
   try{
-    const res=await getAllJobs();
+    const res=await getAllJobs(page);
     console.log(res.data);
-    setJobs(
-    res.data.jobs
-    );
+    setJobs(res.data.jobs);
+    setCurrentPage(res.data.currentPage)
+    setTotalPages(res.data.totalPages)
   }catch(error){
     console.log(error);
   }
@@ -34,8 +37,8 @@ const handleApply=async(jobId)=>{
   }catch(error){
     console.log(error);
     console.log(error.response);
-    // alert("Appliction failed")
-    alert("You are already Applied");
+    alert("Appliction failed")
+    // alert("You are already Applied");
   }
 };
 
@@ -94,9 +97,16 @@ return(
           <button onClick={()=>handleBookmark(job._id)}>Bookmark</button>)
         }
         <hr/>
+
+
       </div>
     ))
     }
+      <div>
+        <button disabled={currentPage===1} onClick={()=>setCurrentPage(currentPage-1)}>Previous</button>
+        <span>Page {currentPage}of {totalPages}</span>
+        <button disabled={  currentPage===totalPages} onClick={()=>setCurrentPage(currentPage+1)}>Next</button>
+    </div>
   </div>
 )
 }
