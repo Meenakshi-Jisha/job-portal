@@ -18,6 +18,7 @@ function App(){
   return(
     <>
       <Navbar/>
+      <h1 className="text-4xl font-bold text-center">Job Portal</h1>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>

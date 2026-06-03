@@ -90,3 +90,15 @@ export const createJob=(data)=>{
         }
     )
 }
+
+export const getDashboardStats=()=>{
+    const token=localStorage.getItem("token")
+    return axios.get(
+        "http://localhost:5000/api/dashboard/stats",
+        {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
