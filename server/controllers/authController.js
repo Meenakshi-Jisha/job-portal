@@ -169,7 +169,7 @@ const updateProfile =async(req,res)=>{
             //     user.skills=skills
             // }
             if(skills){
-                user.skills=skills.split(",");
+                user.skills = Array.isArray(skills) ? skills : skills.split(",");
             }
 
             if(phone)
