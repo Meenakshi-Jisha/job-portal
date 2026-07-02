@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 function Home(){
   return(
-    <div className="min-h-screen flex flex-col justify-center items-center  bg-gradient-to-br from-gray-200 to-gray-400 text-center p-6">
+    <div className="min-h-screen flex flex-col justify-center items-center  bg-gray-200 text-center p-6">
       <h1 className="text-5xl font-bold mb-6">  Find Your Dream Job </h1>
       <p className="text-lg text-gray-700 max-w-2xl mb-8">Search jobs,apply easily,and get hired.</p><br/>
       <div className="flex gap-4">

@@ -41,7 +41,7 @@ function Login(){
     //     <button type="submit">Login</button>
     //   </form>
     // </div>
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-gray-200 to-gray-400 ">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-200 ">
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
       <h1  className="text-3xl font-bold text-center mb-8 text-gray-900">Login</h1>
       <form onSubmit={handleSubmit}>

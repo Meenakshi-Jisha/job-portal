@@ -113,31 +113,29 @@ const updateApplicationStatus = async (req, res) => {
         const { status } = req.body;
 
         // validate input
-        if (
-        !["accepted","rejected"]
-        .includes(status)
-        ) {
-        return res.status(400).json({
-            message:
-            "Status must be accepted or rejected"
-        });
+        if (!["accepted","rejected"].includes(status)) 
+        {
+            return res.status(400).json({
+                message:
+                "Status must be accepted or rejected"
+            });
         }
         const application =await Application.findById(
             applicationId
         ).populate("job");
 
         if (!application) {
-        return res.status(404).json({
-            message:"Application not found"
-        });
+            return res.status(404).json({
+                message:"Application not found"
+            });
         }
         // ownership check
         if (
         application.job.createdBy.toString()!== req.user.id
         ) {
-        return res.status(403).json({
-            message:"Not authorized"
-        });
+            return res.status(403).json({
+                message:"Not authorized"
+            });
         }
         application.status = status;
 

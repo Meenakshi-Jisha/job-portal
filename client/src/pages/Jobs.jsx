@@ -73,7 +73,7 @@ const fetchBookmarks=async()=>{
   }
 }
 return(
-  <div className="min-h-screen bg-gradient-to-br from-gray-200 to-gray-400 p-8">
+  <div className="min-h-screen bg-gray-200 p-8">
     <div className="max-w-6xl mx-auto px-6 py-10">
     <h1 className="text-4xl font-bold text-gray-900 mb-8">Explore Jobs</h1>
     {/* <div className="backdrop-blur-lg bg-white/70 border border-white/30 shadow-xl rounded-2xl p-6 mb-10 flex flex-wrap gap-4"> */}

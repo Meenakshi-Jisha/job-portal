@@ -59,20 +59,20 @@ function Profile() {
     //     <button type='submit'>Update Profile</button>
     //   </form>    
     // </div>
-        <div className="min-h-screen bg-gray-100 bg-gradient-to-br from-gray-200 to-gray-400 p-8">
+        <div className="min-h-screen bg-gray-100 bg-gray-200 p-8">
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
                 <div className="flex items-center justify-between mb-10">
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">Update Profile</h1>
                   <p className="text-gray-500 mt-2">Edit your professional details </p>
-                  <span className="inline-block mt-3 bg-black text-white px-4 py-1 rounded-full text-sm font-medium">
+                  <span className="inline-block mt-3 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">
                     {
                       user.role === "recruiter" ? "Recruiter" : "Job Seeker"
                     }
                   </span>
                 </div>
-                <div className="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center text-3xl font-bold">{user.name?.charAt(0)} </div>
+                <div className="w-20 h-20 rounded-full bg-gray-400 text-white flex items-center justify-center text-3xl font-bold">{user.name?.charAt(0)} </div>
 
               </div>
               <form onSubmit={handleUpdate}>
@@ -122,7 +122,7 @@ function Profile() {
                 <p className="text-sm text-gray-500 mt-2"> Separate skills with commas </p>
               </div>
               <div className="mt-10 flex justify-end">
-                <button   type="submit"   className="bg-black text-white px-8 py-3 rounded-2xl hover:bg-gray-800 transition" > Save Changes </button>
+                <button   type="submit"   className="bg-blue-600 text-white px-8 py-3 rounded-2xl hover:bg-blue-800 transition" > Save Changes </button>
               </div>
             </form>
           </div>
